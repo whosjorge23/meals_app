@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import './data/dummy_data.dart';
+import './models/meal.dart';
 import './widgets/category_meals_screen_widgets/meal_item.dart';
 
 class CategoryMealsScreen extends StatelessWidget {
   static String routeName = '/category-meals';
   // final String categoryId;
   // final String categoryTitle;
-  // const CategoryMealsScreen(
-  //     {Key? key, required this.categoryId, required this.CategoryTitle})
-  //     : super(key: key);
+  final List availableMeals;
+
+  const CategoryMealsScreen({Key? key, required this.availableMeals})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class CategoryMealsScreen extends StatelessWidget {
     final categoryTitle = routeArgs['title'].toString();
     final categotyId = routeArgs['id'].toString();
     final categoryColor = routeArgs['color'];
-    final categoryMeals = DUMMY_MEALS.where((meal) {
+    final categoryMeals = availableMeals.where((meal) {
       return meal.categories.contains(categotyId);
     }).toList();
     return Scaffold(
