@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatefulWidget {
   static String routeName = "/settings";
-  final Function(Map<String, bool>)? saveFilters;
-  const SettingsScreen(
-    this.saveFilters, {
+  final Function? saveFilters;
+  final Map<String, bool>? currentFilters;
+  const SettingsScreen({
     Key? key,
+    Map<String, bool>? this.currentFilters,
+    Function? this.saveFilters,
+    Map<String, bool>? filters,
   }) : super(key: key);
 
   @override
@@ -20,10 +23,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _lactoseFree = false;
   bool _vegan = false;
   bool _vegetarian = false;
+
+  initBuild() {
+    _glutenFree = widget.currentFilters!['gluten']!;
+    _lactoseFree = widget.currentFilters!['lactose']!;
+    _vegan = widget.currentFilters!['vegan']!;
+    _vegetarian = widget.currentFilters!['vegetarian']!;
+  }
+
   @override
   Widget build(BuildContext context) {
+    initBuild();
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          "Adjust your meal selection",
+          style: Theme.of(context).textTheme.headline6,
+        ),
         actions: [
           IconButton(
             onPressed: () {
